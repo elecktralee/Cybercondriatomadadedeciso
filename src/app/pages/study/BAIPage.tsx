@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router";
 import { StudyLayout } from "../../components/StudyLayout";
 import { LikertQuestion } from "../../components/LikertQuestion";
@@ -12,16 +12,52 @@ export default function BAIPage() {
   const [showErrors, setShowErrors] = useState(false);
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState("");
+  const userScrollingRef = useRef(false);
+  const scrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const saved = storage.get<Record<string, number>>(STORAGE_KEYS.BAI);
     if (saved) setResponses(saved);
   }, []);
 
+  // Detecta scroll manual do usuário e suspende auto-scroll por 1s
+  useEffect(() => {
+    const handleManualScroll = () => {
+      userScrollingRef.current = true;
+      if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+      scrollTimeoutRef.current = setTimeout(() => {
+        userScrollingRef.current = false;
+      }, 1000);
+    };
+    window.addEventListener("wheel", handleManualScroll, { passive: true });
+    window.addEventListener("touchmove", handleManualScroll, { passive: true });
+    return () => {
+      window.removeEventListener("wheel", handleManualScroll);
+      window.removeEventListener("touchmove", handleManualScroll);
+    };
+  }, []);
+
   const handleChange = (item: number, value: number) => {
     setResponses(prev => {
       const next = { ...prev, [`item_${item}`]: value };
       storage.set(STORAGE_KEYS.BAI, next);
+
+      // Auto-scroll para próxima questão somente se todas as anteriores estão respondidas
+      if (!userScrollingRef.current) {
+        const allPreviousAnswered = Array.from({ length: item }, (_, i) => `item_${i + 1}`)
+          .every(k => k in next);
+        if (allPreviousAnswered) {
+          setTimeout(() => {
+            if (!userScrollingRef.current) {
+              document.getElementById(`q-bai-${item + 1}`)?.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              });
+            }
+          }, 200);
+        }
+      }
+
       return next;
     });
   };
@@ -46,7 +82,7 @@ export default function BAIPage() {
       await studyApi.saveBAI(id, responses);
       markStepComplete("bai");
       storage.remove(STORAGE_KEYS.BAI);
-      navigate("/css33"); // BAI → CSS-33
+      navigate("/css33");
     } catch (e: any) {
       setApiError("Erro ao salvar respostas. Tente novamente.");
     } finally {
@@ -69,7 +105,7 @@ export default function BAIPage() {
             <p className="font-medium mb-1">Instruções</p>
             <p>
               Abaixo está uma lista de sintomas comuns de ansiedade. Por favor, leia com cuidado cada item da lista.
-              Indique o quanto você tem sido incomodado(a) por cada sintoma durante a <strong>última semana</strong>, 
+              Indique o quanto você tem sido incomodado(a) por cada sintoma durante a <strong>última semana</strong>,
               incluindo hoje.
             </p>
           </div>
@@ -126,6 +162,14 @@ export default function BAIPage() {
 
         {/* Footer */}
         <div className="px-6 py-4 border-t border-gray-100 bg-gray-50 rounded-b-2xl">
+          {/* Indicador verde quando tudo respondido */}
+          {allAnswered && (
+            <div className="flex items-center gap-2 text-green-600 text-sm font-semibold mb-3 animate-pulse">
+              <span className="text-xl">✅</span>
+              Todas as perguntas respondidas! Pode continuar.
+            </div>
+          )}
+
           {apiError && (
             <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg p-3 mb-3 text-sm">
               {apiError}
@@ -144,7 +188,11 @@ export default function BAIPage() {
             <button
               onClick={handleSubmit}
               disabled={loading}
-              className="px-8 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow-md transition-all disabled:opacity-60"
+              className={`px-8 py-3 font-semibold rounded-xl shadow-md transition-all disabled:opacity-60 text-white ${
+                allAnswered
+                  ? "bg-green-600 hover:bg-green-700"
+                  : "bg-indigo-600 hover:bg-indigo-700"
+              }`}
             >
               {loading ? (
                 <span className="flex items-center gap-2">
