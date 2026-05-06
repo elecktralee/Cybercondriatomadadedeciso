@@ -4,6 +4,7 @@ import { AdminLayout } from "../../components/admin/AdminLayout";
 import { DataTable } from "../../components/admin/DataTable";
 import { adminApi } from "../../utils/api";
 import { storage, STORAGE_KEYS } from "../../utils/storage";
+import { Trash2 } from "lucide-react";
 
 type Dataset =
   | "participants"
@@ -244,7 +245,29 @@ export default function TableViewPage({ dataset }: TableViewPageProps) {
 
         <DataTable
           data={data}
-          columns={config.columns}
+          columns={[
+            ...config.columns,
+            ...(dataset === "participants" ? [{
+              key: "actions",
+              label: "Ações",
+              render: (_v: any, row: any) => (
+                <button
+                  onClick={async () => {
+                    try {
+                      await adminApi.deleteParticipant(row.participant_id);
+                      setData(prev => prev.filter(p => p.participant_id !== row.participant_id));
+                    } catch (err) {
+                      console.error("Erro ao deletar participante", err);
+                      alert("Falha ao deletar participante");
+                    }
+                  }}
+                  className="text-red-600 hover:text-red-800"
+                >
+                  <Trash2 size={16} />
+                </button>
+              ),
+            }] : []),
+          ]}
           title={config.title}
           loading={loading}
           emptyMessage="Nenhum dado encontrado para esta base"
