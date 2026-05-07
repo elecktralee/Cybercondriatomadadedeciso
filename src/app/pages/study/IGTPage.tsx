@@ -416,7 +416,7 @@ export default function IGTPage() {
 
   // ── Choose deck ───────────────────────────────────────────────────────────
   const handleChooseDeck = (deckId: DeckId) => {
-    if (phase !== "choosing" || trials.length >= 100) return; // Adicionamos a trava do 100 aqui
+    if (phase !== "choosing" || trials.length >= 100) return;
     const responseTime = Date.now() - trialStartTime.current;
     const trialNum = trials.length + 1;
     const { loss, newPools } = drawLoss(deckId, pools);
@@ -466,25 +466,19 @@ export default function IGTPage() {
 
   // ── Collect (advance or finish) ───────────────────────────────────────────
   const collect = () => {
-    // Se já completamos as 100, não há "else", ele deve encerrar.
     if (trials.length >= 100) {
       finish(trials, balance);
-      return; // O return garante que o código pare aqui
+      return;
     } 
     
     setPhase("choosing");
     setChosenDeck(null);
     trialStartTime.current = Date.now();
   };
-      setPhase("choosing");
-      setChosenDeck(null);
-      trialStartTime.current = Date.now();
-    }
-  };
 
   const trialNumber = trials.length;
   const progress = (trialNumber / IGT_TOTAL_TRIALS) * 100;
-const isComplete = trials.length >= 100;
+  const isComplete = trials.length >= 100;
 
   // ── INSTRUCTIONS ──────────────────────────────────────────────────────────
   if (phase === "instructions") {
@@ -695,6 +689,6 @@ const isComplete = trials.length >= 100;
           </p>
         </div>
       </div>
-    </StudyLayout>
+    </ProjectLayout>
   );
 }
