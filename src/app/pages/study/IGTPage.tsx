@@ -484,7 +484,7 @@ export default function IGTPage() {
 
   const trialNumber = trials.length;
   const progress = (trialNumber / IGT_TOTAL_TRIALS) * 100;
-  const isComplete = trialNumber >= IGT_TOTAL_TRIALS;
+const isComplete = trials.length >= 100;
 
   // ── INSTRUCTIONS ──────────────────────────────────────────────────────────
   if (phase === "instructions") {
