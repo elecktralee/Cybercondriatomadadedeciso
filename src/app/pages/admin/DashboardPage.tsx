@@ -4,6 +4,8 @@ import { AdminLayout } from "../../components/admin/AdminLayout";
 import { adminApi } from "../../utils/api";
 import { DCCAPanel } from "./components/DCCAPanel";
 import { RegressionScatter } from "./components/RegressionScatter";
+import { ResultsPanel } from "../../components/ResultsPanel";
+import { CSS33ValidationPanel } from "./components/CSS33ValidationPanel";
 import {
   Users, CheckCircle2, Hourglass, Timer,
   Search, Globe, Calendar,
@@ -57,15 +59,15 @@ const NUMERIC_VARS = [
   { key: "css33_excess",      label: "CSS-33 Excessividade",               group: "CSS-33 Subescalas" },
   { key: "css33_reassurance", label: "CSS-33 Reasseguramento",             group: "CSS-33 Subescalas" },
   { key: "css33_distrust",    label: "CSS-33 Desconfiança Médica",         group: "CSS-33 Subescalas" },
-  { key: "bai_total",         label: "BAI Total (Ansiedade)",               group: "Psicométricas" },
-  { key: "gse_total",         label: "GSE Total (Autoeficácia)",            group: "Psicométricas" },
+  { key: "bai_total",         label: "BAI Total (Ansiedade)",              group: "Psicométricas" },
+  { key: "gse_total",         label: "GSE Total (Autoeficácia)",           group: "Psicométricas" },
   { key: "igt_net",           label: "IGT Net Total (C+D)−(A+B)",          group: "IGT" },
   { key: "igt_balance",       label: "IGT Saldo Final (R$)",               group: "IGT" },
   { key: "igt_net_b1",        label: "IGT Net Bloco 1 (1–20)",             group: "IGT Blocos" },
-  { key: "igt_net_b2",        label: "IGT Net Bloco 2 (21–40)",            group: "IGT Blocos" },
-  { key: "igt_net_b3",        label: "IGT Net Bloco 3 (41–60)",            group: "IGT Blocos" },
-  { key: "igt_net_b4",        label: "IGT Net Bloco 4 (61–80)",            group: "IGT Blocos" },
-  { key: "igt_net_b5",        label: "IGT Net Bloco 5 (81–100)",           group: "IGT Blocos" },
+  { key: "igt_net_b2",        label: "IGT Net Bloco 2 (21–40)",             group: "IGT Blocos" },
+  { key: "igt_net_b3",        label: "IGT Net Bloco 3 (41–60)",             group: "IGT Blocos" },
+  { key: "igt_net_b4",        label: "IGT Net Bloco 4 (61–80)",             group: "IGT Blocos" },
+  { key: "igt_net_b5",        label: "IGT Net Bloco 5 (81–100)",            group: "IGT Blocos" },
   { key: "age",               label: "Idade (anos)",                       group: "Sociodemográficas" },
   { key: "internet_hours_ord",     label: "Horas de Internet/dia",         group: "Sociodemográficas" },
   { key: "health_search_freq_ord", label: "Freq. Busca Saúde",             group: "Sociodemográficas" },
@@ -453,6 +455,7 @@ export default function DashboardPage() {
   const [loading,setLoading]     = useState(true);
   const [error,setError]         = useState("");
 
+  const [mainTab,setMainTab] = useState<"dashboard"|"results"|"validation">("dashboard");
   const [crossTab,setCrossTab] = useState<"scatter"|"group"|"moderation"|"dcca">("scatter");
   const [corrX,setCorrX] = useState("css33_total");
   const [corrY,setCorrY] = useState("igt_net");
@@ -536,6 +539,40 @@ export default function DashboardPage() {
           </div>
           <span className="text-xs text-slate-300 font-mono">{new Date().toLocaleDateString("pt-BR",{weekday:"short",day:"2-digit",month:"short"})}</span>
         </div>
+
+        {/* ── Main Tabs ──────────────────────────────────────────────────── */}
+        <div className="flex gap-1 p-1 bg-slate-100 rounded-xl w-fit">
+          {([
+            {id:"dashboard", label:"📊 Visão Geral"},
+            {id:"results",   label:"📝 Resultados & Discussão"},
+            {id:"validation", label:"✅ Validação CSS-33"},
+          ] as const).map(t=>(
+            <button key={t.id} onClick={()=>setMainTab(t.id)}
+              className={`px-5 py-2 rounded-lg text-sm font-bold transition-all ${
+                mainTab===t.id
+                  ?"bg-white text-indigo-700 shadow-sm"
+                  :"text-slate-400 hover:text-slate-700"
+              }`}>
+              {t.label}
+            </button>
+          ))}
+        </div>
+
+        {/* ── TAB: RESULTADOS ────────────────────────────────────────────── */}
+        {mainTab==="results"&&analytics&&(
+          <ResultsPanel correlationData={analytics.correlationData} metrics={metrics}/>
+        )}
+        {mainTab==="results"&&!analytics&&(
+          <div className="bg-white rounded-2xl border border-slate-100 p-10 text-center text-slate-300">Carregando dados…</div>
+        )}
+
+        {/* ── TAB: VALIDAÇÃO CSS-33 ──────────────────────────────────────── */}
+        {mainTab==="validation" && (
+          <CSS33ValidationPanel />
+        )}
+
+        {/* ── TAB: DASHBOARD ─────────────────────────────────────────────── */}
+        {mainTab==="dashboard"&&<>
 
         {/* ── KPIs ───────────────────────────────────────────────────────── */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -895,8 +932,10 @@ export default function DashboardPage() {
                 <span>{link.icon}</span><span>{link.label}</span>
               </button>
             ))}
-          </div>
+         </div>
         </div>
+
+        </>}
 
       </div>
     </AdminLayout>
