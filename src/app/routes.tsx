@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router";
 
 import PresentationPage from "./pages/study/PresentationPage";
+import ParticipantLoginPage from "./pages/study/ParticipantLoginPage"; // <-- ADICIONAMOS AQUI
 import TCLEPage from "./pages/study/TCLEPage";
 import TALEPage from "./pages/study/TALEPage";
 import SociodemographicPage from "./pages/study/SociodemographicPage";
@@ -11,8 +12,8 @@ import IGTPage from "./pages/study/IGTPage";
 import CompletionPage from "./pages/study/CompletionPage";
 
 export const router = createBrowserRouter([
-  // ─── Study pages (Visão do Participante) ──────────────
   { path: "/", Component: PresentationPage },
+  { path: "/login", Component: ParticipantLoginPage }, // <-- ADICIONAMOS A ROTA AQUI
   { path: "/tcle", Component: TCLEPage },
   { path: "/tale", Component: TALEPage },
   { path: "/sociodemografico", Component: SociodemographicPage },
