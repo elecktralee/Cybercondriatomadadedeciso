@@ -133,8 +133,8 @@ export default function PresentationPage() {
               <p className="text-[11px] text-white/40 font-medium uppercase tracking-widest leading-none">FFCLRP</p>
               <p className="text-xs text-white/70 font-semibold leading-none mt-0.5">Psicobiologia</p>
             </div>
-          </div>
-          <a href="/admin" className="text-xs text-white/20 hover:text-white/40 transition-colors">
+        </div>
+          <a href="/login" className="text-xs text-white/20 hover:text-white/40 transition-colors">
             Acesso restrito
           </a>
         </nav>
