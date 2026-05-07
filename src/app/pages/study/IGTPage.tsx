@@ -689,6 +689,6 @@ export default function IGTPage() {
           </p>
         </div>
       </div>
-    </ProjectLayout>
+    </StudyLayout>
   );
 }
