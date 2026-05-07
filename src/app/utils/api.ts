@@ -88,18 +88,21 @@ export const adminApi = {
   css33: () =>
     request<any[]>("/admin/css33"),
 
-
   gse: () =>
     request<any[]>("/admin/gse"),
 
-
   igtSummary: () =>
     request<any[]>("/admin/igt-summary"),
-
 
   igtTrials: (participantId?: string) =>
     request<any[]>(`/admin/igt-trials${participantId ? `?participant=${participantId}` : ""}`),
 
   analytics: () =>
     request<any>("/admin/analytics"),
+
+  // ── DELETE participant + todos os dados associados ──────────────────────
+  deleteParticipant: (participantId: string) =>
+    request<{ success: boolean }>(`/admin/participants/${participantId}`, {
+      method: "DELETE",
+    }),
 };
