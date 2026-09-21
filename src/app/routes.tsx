@@ -4,6 +4,7 @@ import PresentationPage from "./pages/study/PresentationPage";
 import ParticipantLoginPage from "./pages/study/ParticipantLoginPage"; // <-- ADICIONAMOS AQUI
 import TCLEPage from "./pages/study/TCLEPage";
 import TALEPage from "./pages/study/TALEPage";
+import ResponsavelPage from "./pages/study/ResponsavelPage";
 import SociodemographicPage from "./pages/study/SociodemographicPage";
 import CSS33Page from "./pages/study/CSS33Page";
 import BAIPage from "./pages/study/BAIPage";
@@ -15,6 +16,7 @@ export const router = createBrowserRouter([
   { path: "/", Component: PresentationPage },
   { path: "/login", Component: ParticipantLoginPage }, // <-- ADICIONAMOS A ROTA AQUI
   { path: "/tcle", Component: TCLEPage },
+  { path: "/responsavel", Component: ResponsavelPage },
   { path: "/tale", Component: TALEPage },
   { path: "/sociodemografico", Component: SociodemographicPage },
   { path: "/css33", Component: CSS33Page },
