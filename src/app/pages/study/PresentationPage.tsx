@@ -16,10 +16,10 @@ const steps = [
 ];
 
 const badges = [
-  { label: "20–30 min",    icon: ClockIcon },
-  { label: "Anônimo",      icon: LockIcon },
+  { label: "15–25 min",    icon: ClockIcon },
+  { label: "Sem nome",      icon: LockIcon },
   { label: "LGPD",         icon: ShieldIcon },
-  { label: "CEP aprovado", icon: CheckIcon },
+  { label: "CEP em aprovação", icon: CheckIcon },
 ];
 
 // ── Inline SVG icons (sem emojis) ─────────────────────────────────────────────
@@ -219,7 +219,7 @@ export default function PresentationPage() {
         <div className="max-w-5xl mx-auto">
           <div className="mb-12">
             <p className="text-indigo-400 text-xs font-bold uppercase tracking-widest mb-2">Protocolo</p>
-            <h2 className="text-3xl md:text-4xl font-black text-white">6 etapas · ~25 minutos</h2>
+            <h2 className="text-3xl md:text-4xl font-black text-white">6 etapas · ~15 a 25 minutos</h2>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -289,9 +289,9 @@ export default function PresentationPage() {
                 {[
                   "Participação completamente voluntária",
                   "Você pode desistir a qualquer momento",
-                  "Dados anônimos e confidenciais",
+                  "Suas respostas não são ligadas ao seu nome",
                   "Armazenados com segurança (LGPD)",
-                  "Nenhum dado de identificação coletado",
+                  "Suas respostas não são ligadas ao seu nome",
                 ].map(item => (
                   <li key={item} className="flex items-start gap-2.5 text-sm text-white/60">
                     <span className="w-4 h-4 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex-shrink-0 flex items-center justify-center mt-0.5">
@@ -313,7 +313,7 @@ export default function PresentationPage() {
               <div>
                 <h3 className="text-amber-300 font-bold text-sm mb-1">Critérios de Participação</h3>
                 <p className="text-amber-200/60 text-sm">
-                  Ter <strong className="text-amber-200/80">16 anos ou mais</strong> e acesso regular à internet.
+                  Ter <strong className="text-amber-200/80">Ter de 16 a 25 anos</strong> e acesso regular à internet.
                   {" "}Participantes entre 16 e 17 anos necessitam de autorização do responsável legal (TALE + TCLE).
                 </p>
               </div>
@@ -360,7 +360,7 @@ export default function PresentationPage() {
       <section className="bg-gradient-to-b from-[#0d0f14] to-[#0a0c10] px-6 md:px-12 py-16 border-t border-white/6">
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-white/20 text-xs font-medium uppercase tracking-widest mb-8">
-            Pesquisa aprovada pelo Comitê de Ética em Pesquisa · Res. CNS 466/2012, 510/2016 e LGPD
+            Pesquisa em aprovação pelo Comitê de Ética em Pesquisa · Res. CNS 466/2012, 510/2016 e LGPD
           </p>
 
           {error && (
