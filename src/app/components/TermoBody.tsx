@@ -57,5 +57,21 @@ export function Contatos({ mostrarOrientador = true }: { mostrarOrientador?: boo
   );
 }
 
+// Botao para baixar a copia em PDF deste termo
+export function BotaoBaixarPDF({ href, cor = "indigo" }: { href: string; cor?: "indigo" | "amber" }) {
+  const classes = cor === "amber"
+    ? "border-amber-200 text-amber-700 hover:bg-amber-50"
+    : "border-indigo-200 text-indigo-700 hover:bg-indigo-50";
+  return (
+    <a
+      href={href}
+      download
+      className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg border text-sm font-medium transition-colors ${classes}`}
+    >
+      Baixar este Termo em PDF
+    </a>
+  );
+}
+
 export const TEXTO_CEP_DUVIDAS =
   "As dúvidas direcionadas ao Comitê de Ética em Pesquisa (CEP) são somente relativas aos aspectos éticos da pesquisa, incluindo denúncias ou reclamações sobre a conduta ética do estudo. Dúvidas sobre o conteúdo da pesquisa devem ser encaminhadas à pesquisadora responsável.";
