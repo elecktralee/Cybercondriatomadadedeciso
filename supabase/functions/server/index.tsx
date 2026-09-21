@@ -31,21 +31,7 @@ app.post("/make-server-ba772e44/study/init", async (c) => {
     const browser = ua.match(/(Chrome|Firefox|Safari|Edge|OPR|Opera)[/\s](\d+)/)?.[1] || "Unknown";
     const os = ua.match(/(Windows NT|Mac OS X|Linux|Android|iOS|iPhone OS)/)?.[1]?.replace("NT", "").replace("OS X", "macOS").replace("iPhone OS", "iOS") || "Unknown";
 
-    const ip = c.req.header("x-forwarded-for")?.split(",")[0].trim() ||
-               c.req.header("cf-connecting-ip") ||
-               c.req.header("x-real-ip") || "unknown";
-
-    let geo = { country: null as string | null, state: null as string | null, city: null as string | null };
-    const isPrivateIp = !ip || ip === "unknown" || /^(127\.|192\.168\.|10\.|172\.(1[6-9]|2\d|3[01])\.)/.test(ip);
-    if (!isPrivateIp) {
-      try {
-        const r = await fetch(`https://ipapi.co/${ip}/json/`, { signal: AbortSignal.timeout(3000) });
-        if (r.ok) {
-          const g = await r.json();
-          geo = { country: g.country_name || null, state: g.region || null, city: g.city || null };
-        }
-      } catch (e) { console.log("Geo lookup failed:", e); }
-    }
+    // Nao registramos IP nem localizacao por IP (ver TCLE).
 
     const igtGroup = Math.floor(Math.random() * 4);
 
@@ -54,14 +40,10 @@ app.post("/make-server-ba772e44/study/init", async (c) => {
       session_start: now,
       session_end: null,
       duration_minutes: null,
-      user_agent: ua,
-      ip_address: ip,
       device_type: deviceType,
       browser,
       os,
-      country: geo.country,
-      state: geo.state,
-      city: geo.city,
+      state: null, // preenchido com o estado informado pelo proprio participante
       igt_group: igtGroup,
       status: "in_progress",
       created_at: now,
@@ -81,7 +63,11 @@ app.post("/make-server-ba772e44/study/consent/:id", async (c) => {
     const id = c.req.param("id");
     const p = await kv.get(`participant:${id}`);
     if (!p) return c.json({ success: false, error: "Participante não encontrado" }, 404);
-    await kv.set(`participant:${id}`, { ...p, consent_at: new Date().toISOString() });
+    let body: any = {};
+    try { body = await c.req.json(); } catch { /* corpo vazio */ }
+    const consentType = body?.consent_type === "menor_responsavel_assentimento"
+      ? "menor_responsavel_assentimento" : "adulto";
+    await kv.set(`participant:${id}`, { ...p, consent_at: new Date().toISOString(), consent_type: consentType });
     return c.json({ success: true });
   } catch (e) {
     console.log("Error /study/consent:", e);
@@ -111,6 +97,9 @@ app.post("/make-server-ba772e44/study/sociodemographic/:id", async (c) => {
       created_at: new Date().toISOString(),
     };
     await kv.set(`socio:${id}`, record);
+    // Estado informado pelo participante (opcional), usado no grafico de estados
+    const part = await kv.get(`participant:${id}`);
+    if (part) await kv.set(`participant:${id}`, { ...part, state: data.stateUF || null });
     return c.json({ success: true }, 201);
   } catch (e) {
     console.log("Error /study/sociodemographic:", e);
