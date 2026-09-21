@@ -25,8 +25,11 @@ export const studyApi = {
       { method: "POST" }
     ),
 
-  consent: (id: string) =>
-    request<{ success: boolean }>(`/study/consent/${id}`, { method: "POST" }),
+  consent: (id: string, consentType: "adulto" | "menor_responsavel_assentimento" = "adulto") =>
+    request<{ success: boolean }>(`/study/consent/${id}`, {
+      method: "POST",
+      body: JSON.stringify({ consent_type: consentType }),
+    }),
 
   saveSociodemographic: (id: string, data: Record<string, any>) =>
     request<{ success: boolean }>(`/study/sociodemographic/${id}`, {

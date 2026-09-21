@@ -30,6 +30,7 @@ export const STORAGE_KEYS = {
   IGT_BALANCE: "cs_igt_balance",
   ADMIN_TOKEN: "cs_admin_token",
   COMPLETED_STEPS: "cs_completed_steps",
+  AGE_GROUP: "cs_age_group",
 };
 
 export function getParticipantId(): string | null {
