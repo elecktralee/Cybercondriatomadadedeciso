@@ -107,7 +107,7 @@ export function StudyLayout({ currentStep, children, maxWidth = "max-w-2xl" }: S
 
       {/* Footer */}
       <footer className="text-center py-6 text-xs text-gray-400 border-t border-gray-100">
-        Pesquisa aprovada pelo CEP · Resolução CNS 466/2012 e 510/2016 · LGPD
+        Pesquisa em aprovação pelo CEP · Resolução CNS 466/2012 e 510/2016 · LGPD
       </footer>
     </div>
   );
