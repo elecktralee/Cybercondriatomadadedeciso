@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { clearStudyData } from "../../utils/storage";
+import { STATUS_CEP } from "../../config/study";
 
 export default function CompletionPage() {
   useEffect(() => {
@@ -28,7 +29,7 @@ export default function CompletionPage() {
           {[
             { icon: "🔬", title: "Contribuição", desc: "Seus dados contribuem para o conhecimento científico sobre saúde digital no Brasil" },
             { icon: "🔒", title: "Segurança", desc: "Seus dados estão armazenados com segurança e serão utilizados apenas para fins científicos" },
-            { icon: "📧", title: "Contato", desc: "Dúvidas? ericasm@usp.br · (75)98874-75223" },
+            { icon: "📧", title: "Contato", desc: "Dúvidas? ericasm@usp.br · (75) 98874-7523" },
           ].map(card => (
             <div key={card.title} className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm text-left">
               <span className="text-2xl mb-2 block">{card.icon}</span>
@@ -48,7 +49,7 @@ export default function CompletionPage() {
             <strong>Orientador:</strong> Prof. Jose Aparecido da Silva
           </p>
           <p className="text-indigo-600 text-xs mt-2">
-            Pesquisa em aprovação pelo Comitê de Ética em Pesquisa · Res. CNS 466/2012 e 510/2016 · LGPD
+            {STATUS_CEP} · Res. CNS 466/2012 e 510/2016 · LGPD
           </p>
         </div>
 

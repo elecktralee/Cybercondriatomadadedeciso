@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import { studyApi } from "../../utils/api";
 import { storage, STORAGE_KEYS } from "../../utils/storage";
 import { ImageWithFallback } from "../../components/figma/ImageWithFallback";
+import { STATUS_CEP, STATUS_CEP_CURTO, TEMPO_CURTO } from "../../config/study";
 
 const HERO_IMG = "https://images.unsplash.com/photo-1737505599159-5ffc1dcbc08f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhYnN0cmFjdCUyMGJyYWluJTIwbmV1cmFsJTIwbmV0d29yayUyMGRpZ2l0YWwlMjBzY2llbmNlfGVufDF8fHx8MTc3Nzk4NzczNHww&ixlib=rb-4.1.0&q=80&w=1080";
 
@@ -16,10 +17,10 @@ const steps = [
 ];
 
 const badges = [
-  { label: "10–25 min",    icon: ClockIcon },
-  { label: "Suas respostas não são ligadas ao seu nome",      icon: LockIcon },
+  { label: TEMPO_CURTO,    icon: ClockIcon },
+  { label: "Sem nome",      icon: LockIcon },
   { label: "LGPD",         icon: ShieldIcon },
-  { label: "CEP em aprovação", icon: CheckIcon },
+  { label: STATUS_CEP_CURTO, icon: CheckIcon },
 ];
 
 // ── Inline SVG icons (sem emojis) ─────────────────────────────────────────────
@@ -219,7 +220,7 @@ export default function PresentationPage() {
         <div className="max-w-5xl mx-auto">
           <div className="mb-12">
             <p className="text-indigo-400 text-xs font-bold uppercase tracking-widest mb-2">Protocolo</p>
-            <h2 className="text-3xl md:text-4xl font-black text-white">6 etapas ·  ~15 a 25 minutos</h2>
+            <h2 className="text-3xl md:text-4xl font-black text-white">6 etapas · {TEMPO_CURTO}</h2>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -254,8 +255,8 @@ export default function PresentationPage() {
                 <h3 className="text-white font-bold text-lg">Sobre o Estudo</h3>
               </div>
               <p className="text-white/60 text-sm leading-relaxed mb-4">
-                Esta pesquisa de mestrado investiga a relação entre <strong className="text-white/80">cybercondria</strong> —
-                preocupação excessiva com saúde baseada em buscas na internet —, ansiedade,
+                Esta pesquisa de mestrado investiga a relação entre <strong className="text-white/80">cybercondria</strong> (preocupação
+                excessiva com saúde baseada em buscas na internet), ansiedade,
                 autoeficácia e tomada de decisão.
               </p>
               <p className="text-white/50 text-sm leading-relaxed">
@@ -289,9 +290,9 @@ export default function PresentationPage() {
                 {[
                   "Participação completamente voluntária",
                   "Você pode desistir a qualquer momento",
-                  "Suas respostas não são ligadas ao seu nome",
+                  "Respostas não ligadas ao seu nome",
                   "Armazenados com segurança (LGPD)",
-                  "Suas respostas não são ligadas ao seu nome",
+                  "Não pedimos nome, CPF, e-mail nem endereço IP",
                 ].map(item => (
                   <li key={item} className="flex items-start gap-2.5 text-sm text-white/60">
                     <span className="w-4 h-4 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex-shrink-0 flex items-center justify-center mt-0.5">
@@ -313,7 +314,7 @@ export default function PresentationPage() {
               <div>
                 <h3 className="text-amber-300 font-bold text-sm mb-1">Critérios de Participação</h3>
                 <p className="text-amber-200/60 text-sm">
-                  Ter <strong className="text-amber-200/80">16 anos a 25 anos</strong> e acesso regular à internet.
+                  Ter <strong className="text-amber-200/80">de 16 a 25 anos</strong> e acesso regular à internet.
                   {" "}Participantes entre 16 e 17 anos necessitam de autorização do responsável legal (TALE + TCLE).
                 </p>
               </div>
@@ -349,7 +350,7 @@ export default function PresentationPage() {
               </a>
               <div className="flex items-center gap-2.5 px-4 py-2.5 bg-white/6 border border-white/10 rounded-xl text-sm text-white/50">
                 <PhoneIcon className="w-4 h-4 text-indigo-400" />
-                (75) 98874-75223
+                (75) 98874-7523
               </div>
             </div>
           </div>
@@ -360,7 +361,7 @@ export default function PresentationPage() {
       <section className="bg-gradient-to-b from-[#0d0f14] to-[#0a0c10] px-6 md:px-12 py-16 border-t border-white/6">
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-white/20 text-xs font-medium uppercase tracking-widest mb-8">
-            Pesquisa em aprovação pelo Comitê de Ética em Pesquisa · Res. CNS 466/2012, 510/2016 e LGPD
+            {STATUS_CEP} · Res. CNS 466/2012, 510/2016 e LGPD
           </p>
 
           {error && (

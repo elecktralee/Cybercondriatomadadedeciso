@@ -9,14 +9,14 @@ interface FormData {
   maritalStatus: string; monthlyIncome: string; internetHours: string;
   chronicCondition: string; psychiatricDiagnosis: string; medications: string;
   healthSearchFrequency: string; healthcareAccess: string;
-  city: string; stateUF: string;
+  stateUF: string;
 }
 
 const initialForm: FormData = {
   age: "", gender: "", education: "", occupation: "", maritalStatus: "",
   monthlyIncome: "", internetHours: "", chronicCondition: "", psychiatricDiagnosis: "",
   medications: "", healthSearchFrequency: "", healthcareAccess: "",
-  city: "", stateUF: "",
+  stateUF: "",
 };
 
 interface FieldProps { label: string; required?: boolean; children: React.ReactNode; error?: boolean; id?: string }
@@ -104,7 +104,7 @@ export default function SociodemographicPage() {
   const validate = () => {
     const errs: Partial<FormData> = {};
     requiredFields.forEach(k => { if (!form[k]) errs[k] = "required"; });
-    if (form.age && (Number(form.age) < 16 || Number(form.age) > 99)) errs.age = "invalid";
+    if (form.age && (Number(form.age) < 16 || Number(form.age) > 25)) errs.age = "invalid";
     setErrors(errs);
     return Object.keys(errs).length === 0;
   };
@@ -151,14 +151,14 @@ export default function SociodemographicPage() {
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100">
         <div className="bg-indigo-600 px-6 py-5 text-white rounded-t-2xl">
           <h2 className="text-lg font-semibold">Dados Sociodemográficos</h2>
-          <p className="text-indigo-200 text-sm mt-1">Todas as informações são anônimas e confidenciais</p>
+          <p className="text-indigo-200 text-sm mt-1">Suas respostas não são ligadas ao seu nome e são confidenciais</p>
         </div>
 
         <div className="p-6 space-y-5">
           <Field id="field-age" label="Idade" required error={!!errors.age}>
-            <input type="number" min={16} max={99} placeholder="Ex: 20"
+            <input type="number" min={16} max={25} placeholder="Ex: 20"
               value={form.age} onChange={e => set("age", e.target.value)} className={sc} />
-            {errors.age === "invalid" && <p className="text-red-500 text-xs mt-1">Idade deve ser entre 16 e 99 anos</p>}
+            {errors.age === "invalid" && <p className="text-red-500 text-xs mt-1">Esta pesquisa é para pessoas de 16 a 25 anos</p>}
           </Field>
 
           <Field id="field-gender" label="Com qual gênero você se identifica?" required error={!!errors.gender}>
@@ -190,9 +190,9 @@ export default function SociodemographicPage() {
           <Field id="field-monthlyIncome" label="Renda mensal familiar aproximada" required error={!!errors.monthlyIncome}>
             <Sel field="monthlyIncome" opts={[
               ["Até R$1.320","Até R$1.320 (até 1 salário mínimo)"],
-              ["R$1.321–R$2.640","R$1.321 – R$2.640 (1 a 2 SM)"],
-              ["R$2.641–R$5.280","R$2.641 – R$5.280 (2 a 4 SM)"],
-              ["R$5.281–R$10.560","R$5.281 – R$10.560 (4 a 8 SM)"],
+              ["R$1.321–R$2.640","R$1.321 a R$2.640 (1 a 2 SM)"],
+              ["R$2.641–R$5.280","R$2.641 a R$5.280 (2 a 4 SM)"],
+              ["R$5.281–R$10.560","R$5.281 a R$10.560 (4 a 8 SM)"],
               ["Acima de R$10.560","Acima de R$10.560 (mais de 8 SM)"],
               ["Prefiro não informar","Prefiro não informar"],
             ]} />
@@ -237,16 +237,7 @@ export default function SociodemographicPage() {
           {/* Localização */}
           <div className="border-t border-gray-100 pt-5">
             <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">Localização (opcional)</p>
-            <div className="grid grid-cols-2 gap-4">
-              <Field label="Cidade">
-                <input
-                  type="text"
-                  placeholder="Ex: Salvador"
-                  value={form.city}
-                  onChange={e => set("city", e.target.value)}
-                  className={sc}
-                />
-              </Field>
+            <div className="grid grid-cols-1 gap-4">
               <Field label="Estado">
                 <select
                   className={sc}
@@ -255,7 +246,7 @@ export default function SociodemographicPage() {
                 >
                   <option value="">Selecione...</option>
                   {STATES_BR.map(([uf, name]) => (
-                    <option key={uf} value={uf}>{uf} — {name}</option>
+                    <option key={uf} value={uf}>{uf} - {name}</option>
                   ))}
                 </select>
               </Field>
