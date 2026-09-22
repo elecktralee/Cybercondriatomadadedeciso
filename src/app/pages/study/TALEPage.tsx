@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { StudyLayout } from "../../components/StudyLayout";
-import { Secao, Contatos, TEXTO_CEP_DUVIDAS } from "../../components/TermoBody";
+import { Secao, Contatos, TEXTO_CEP_DUVIDAS, BotaoBaixarPDF } from "../../components/TermoBody";
 import { studyApi } from "../../utils/api";
 import { requireParticipant, markStepComplete, isStepComplete } from "../../utils/storage";
 import { TITULO_PESQUISA, TEMPO_ESTIMADO, PESQUISADORA } from "../../config/study";
@@ -154,14 +154,19 @@ export default function TALEPage() {
           <Secao titulo="E se eu gastar alguma coisa?">
             <p>
               Participar não custa nada e não há pagamento. Se você tiver algum gasto por causa da pesquisa, como
-              o uso de dados de internet, a pesquisadora devolve o valor, mediante comprovação. Se acontecer
-              algum dano por causa da pesquisa, você tem direito a indenização.
+              o uso de dados de internet, a pesquisadora devolve o valor, mediante comprovação, como determina a
+              Resolução CNS n.º 466/2012. Se acontecer algum dano por causa da pesquisa, você tem direito a
+              indenização.
             </p>
           </Secao>
 
           <Secao titulo="Fale com a gente">
             <p>Em caso de dúvidas sobre a pesquisa, você, seus pais ou seu responsável podem falar com a pesquisadora. {TEXTO_CEP_DUVIDAS}</p>
             <Contatos mostrarOrientador={false} />
+            <p>Este Termo também pode ser baixado em PDF pelo botão abaixo, para guardar ou imprimir.</p>
+            <div className="pt-1">
+              <BotaoBaixarPDF href="/termos/tale.pdf" cor="amber" />
+            </div>
           </Secao>
 
           <div className="border-2 border-amber-300 rounded-xl overflow-hidden">

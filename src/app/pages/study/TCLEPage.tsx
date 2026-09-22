@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router";
 import { StudyLayout } from "../../components/StudyLayout";
-import { Secao, Lista, Contatos, TEXTO_CEP_DUVIDAS } from "../../components/TermoBody";
+import { Secao, Lista, Contatos, TEXTO_CEP_DUVIDAS, BotaoBaixarPDF } from "../../components/TermoBody";
 import { studyApi } from "../../utils/api";
 import { requireParticipant, markStepComplete, storage, STORAGE_KEYS } from "../../utils/storage";
 import { TITULO_PESQUISA, TEMPO_ESTIMADO, PESQUISADORA } from "../../config/study";
@@ -53,9 +53,9 @@ export default function TCLEPage() {
   // ── Etapa 1: idade ─────────────────────────────────────────────────────────
   if (etapa === "idade") {
     const opcoes: { v: Exclude<Faixa, null>; texto: React.ReactNode }[] = [
-      { v: "adulto", texto: <>Tenho entre <strong>18 e 25 anos</strong></> },
+      { v: "adulto", texto: <>Tenho <strong>18 anos ou mais</strong></> },
       { v: "menor",  texto: <>Tenho <strong>16 ou 17 anos</strong></> },
-      { v: "fora",   texto: <>Tenho <strong>menos de 16 anos</strong> ou <strong>mais de 25 anos</strong></> },
+      { v: "fora",   texto: <>Tenho <strong>menos de 16 anos</strong></> },
     ];
     return (
       <StudyLayout currentStep="tcle">
@@ -86,7 +86,7 @@ export default function TCLEPage() {
 
             {faixa === "fora" && (
               <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm text-gray-700 leading-relaxed">
-                Muito obrigada pelo interesse. Esta pesquisa é destinada a pessoas de 16 a 25 anos, por isso
+                Muito obrigada pelo interesse. Esta pesquisa é destinada a pessoas com 16 anos ou mais, por isso
                 não será possível participar. Você pode fechar esta janela.
               </div>
             )}
@@ -236,15 +236,15 @@ export default function TCLEPage() {
 
           <Secao titulo="8. Ressarcimento e indenização">
             <p>
-              Sua participação não terá custos e não haverá remuneração. Mesmo sendo uma pesquisa realizada
-              integralmente de forma online, caso você tenha qualquer gasto decorrente da sua participação, como
-              o consumo de dados de internet, você será ressarcido(a) integralmente pela pesquisadora
-              responsável, mediante comprovação. Para solicitar o ressarcimento, basta entrar em contato pelo
-              e-mail {PESQUISADORA.email}.
+              A participação nesta pesquisa não acarretará custos, nem haverá qualquer gratificação financeira.
+              Em caso de despesas necessárias decorrentes da pesquisa, como o consumo de dados de internet, você
+              será devidamente ressarcido pela pesquisadora responsável, mediante comprovação, como determina a
+              Resolução CNS n.º 466/2012. Para solicitar o ressarcimento, basta entrar em contato pelo e-mail{" "}
+              {PESQUISADORA.email}.
             </p>
             <p>
-              Caso ocorra algum dano diretamente decorrente da participação nesta pesquisa, você terá direito a
-              indenização, conforme determina a Resolução CNS n.º 466/2012.
+              Você também terá direito à indenização, caso sofra eventuais danos decorrentes da sua participação
+              na pesquisa.
             </p>
           </Secao>
 
@@ -264,7 +264,10 @@ export default function TCLEPage() {
               participar, de forma voluntária, após a leitura das informações contidas neste Termo. Caso não
               concorde, apenas feche a página em seu navegador.
             </p>
-            <p>Este Termo pode ser impresso ou salvo para sua guarda.</p>
+            <p>Este Termo pode ser baixado em PDF pelo botão abaixo, para impressão ou guarda.</p>
+            <div className="pt-1">
+              <BotaoBaixarPDF href="/termos/tcle-participante.pdf" />
+            </div>
           </Secao>
         </div>
 

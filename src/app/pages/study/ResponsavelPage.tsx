@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { StudyLayout } from "../../components/StudyLayout";
-import { Secao, Lista, Contatos, TEXTO_CEP_DUVIDAS } from "../../components/TermoBody";
+import { Secao, Lista, Contatos, TEXTO_CEP_DUVIDAS, BotaoBaixarPDF } from "../../components/TermoBody";
 import { requireParticipant, markStepComplete } from "../../utils/storage";
 import { TITULO_PESQUISA, TEMPO_ESTIMADO, PESQUISADORA } from "../../config/study";
 
@@ -142,15 +142,15 @@ export default function ResponsavelPage() {
 
           <Secao titulo="8. Ressarcimento e indenização">
             <p>
-              A participação não terá custos e não haverá remuneração. Mesmo sendo uma pesquisa realizada
-              integralmente de forma online, caso haja qualquer gasto decorrente da participação, como o consumo
-              de dados de internet, você ou o(a) adolescente serão ressarcidos integralmente pela pesquisadora
-              responsável, mediante comprovação. Para solicitar o ressarcimento, basta entrar em contato pelo
-              e-mail {PESQUISADORA.email}.
+              A participação não acarretará custos, nem haverá qualquer gratificação financeira. Em caso de
+              despesas necessárias decorrentes da participação, como o consumo de dados de internet, você ou
+              o(a) adolescente serão devidamente ressarcidos pela pesquisadora responsável, mediante
+              comprovação, como determina a Resolução CNS n.º 466/2012. Para solicitar o ressarcimento, basta
+              entrar em contato pelo e-mail {PESQUISADORA.email}.
             </p>
             <p>
-              Caso ocorra algum dano diretamente decorrente da participação nesta pesquisa, o(a) participante
-              terá direito a indenização, conforme determina a Resolução CNS n.º 466/2012.
+              O(A) participante também terá direito à indenização, caso sofra eventuais danos decorrentes da
+              participação na pesquisa.
             </p>
           </Secao>
 
@@ -170,7 +170,10 @@ export default function ResponsavelPage() {
               adolescente e que autoriza, de forma voluntária, a sua participação, após a leitura das informações
               contidas neste Termo. Caso não concorde, apenas feche a página em seu navegador.
             </p>
-            <p>Este Termo pode ser impresso ou salvo para sua guarda.</p>
+            <p>Este Termo pode ser baixado em PDF pelo botão abaixo, para impressão ou guarda.</p>
+            <div className="pt-1">
+              <BotaoBaixarPDF href="/termos/tcle-responsavel.pdf" cor="amber" />
+            </div>
           </Secao>
 
           <label className={`flex items-start gap-3 p-4 rounded-lg border-2 cursor-pointer transition-all ${

@@ -104,7 +104,7 @@ export default function SociodemographicPage() {
   const validate = () => {
     const errs: Partial<FormData> = {};
     requiredFields.forEach(k => { if (!form[k]) errs[k] = "required"; });
-    if (form.age && (Number(form.age) < 16 || Number(form.age) > 25)) errs.age = "invalid";
+    if (form.age && (Number(form.age) < 16 || Number(form.age) > 120)) errs.age = "invalid";
     setErrors(errs);
     return Object.keys(errs).length === 0;
   };
@@ -121,7 +121,8 @@ export default function SociodemographicPage() {
     setLoading(true); setApiError("");
     try {
       const id = requireParticipant();
-      await studyApi.saveSociodemographic(id, form);
+      const foraFaixaAlvo = Number(form.age) > 25;
+      await studyApi.saveSociodemographic(id, { ...form, foraFaixaAlvo });
       markStepComplete("socio");
       navigate("/bai");
     } catch {
@@ -156,9 +157,9 @@ export default function SociodemographicPage() {
 
         <div className="p-6 space-y-5">
           <Field id="field-age" label="Idade" required error={!!errors.age}>
-            <input type="number" min={16} max={25} placeholder="Ex: 20"
+            <input type="number" min={16} max={120} placeholder="Ex: 20"
               value={form.age} onChange={e => set("age", e.target.value)} className={sc} />
-            {errors.age === "invalid" && <p className="text-red-500 text-xs mt-1">Esta pesquisa é para pessoas de 16 a 25 anos</p>}
+            {errors.age === "invalid" && <p className="text-red-500 text-xs mt-1">A idade mínima para participar é 16 anos</p>}
           </Field>
 
           <Field id="field-gender" label="Com qual gênero você se identifica?" required error={!!errors.gender}>
