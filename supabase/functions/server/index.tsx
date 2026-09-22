@@ -94,6 +94,7 @@ app.post("/make-server-ba772e44/study/sociodemographic/:id", async (c) => {
       medications: data.medications,
       health_search_frequency: data.healthSearchFrequency,
       healthcare_access: data.healthcareAccess,
+      out_of_target_range: !!data.foraFaixaAlvo,
       created_at: new Date().toISOString(),
     };
     await kv.set(`socio:${id}`, record);
