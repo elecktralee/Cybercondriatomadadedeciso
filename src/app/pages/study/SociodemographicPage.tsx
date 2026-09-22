@@ -5,7 +5,7 @@ import { studyApi } from "../../utils/api";
 import { requireParticipant, markStepComplete } from "../../utils/storage";
 
 interface FormData {
-  age: string; gender: string; education: string; occupation: string;
+  age: string; gender: string; raceColor: string; religion: string; education: string; occupation: string;
   maritalStatus: string; monthlyIncome: string; internetHours: string;
   chronicCondition: string; psychiatricDiagnosis: string; medications: string;
   healthSearchFrequency: string; healthcareAccess: string;
@@ -13,7 +13,7 @@ interface FormData {
 }
 
 const initialForm: FormData = {
-  age: "", gender: "", education: "", occupation: "", maritalStatus: "",
+  age: "", gender: "", raceColor: "", religion: "", education: "", occupation: "", maritalStatus: "",
   monthlyIncome: "", internetHours: "", chronicCondition: "", psychiatricDiagnosis: "",
   medications: "", healthSearchFrequency: "", healthcareAccess: "",
   stateUF: "",
@@ -36,7 +36,7 @@ const sc = "w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-whit
 
 // Required fields in order — used for sequential scroll
 const REQUIRED_FIELD_ORDER: (keyof FormData)[] = [
-  "age", "gender", "education", "maritalStatus", "monthlyIncome",
+  "age", "gender", "raceColor", "religion", "education", "maritalStatus", "monthlyIncome",
   "internetHours", "chronicCondition", "psychiatricDiagnosis", "medications",
   "healthSearchFrequency", "healthcareAccess",
 ];
@@ -164,6 +164,31 @@ export default function SociodemographicPage() {
 
           <Field id="field-gender" label="Com qual gênero você se identifica?" required error={!!errors.gender}>
             <Sel field="gender" opts={[["Masculino","Masculino"],["Feminino","Feminino"],["Não-binário","Não-binário"],["Outro","Outro"],["Prefiro não informar","Prefiro não informar"]]} />
+          </Field>
+
+          <Field id="field-raceColor" label="Como você se autodeclara em relação à sua cor ou raça?" required error={!!errors.raceColor}>
+            <Sel field="raceColor" opts={[
+              ["Branco(a)","Branco(a)"],
+              ["Preto(a)","Preto(a)"],
+              ["Amarelo(a)","Amarelo(a)"],
+              ["Pardo(a)","Pardo(a)"],
+              ["Indígena","Indígena"],
+              ["Prefiro não informar","Prefiro não informar"],
+            ]} />
+          </Field>
+
+          <Field id="field-religion" label="Você segue alguma religião? Se sim, em qual grupo se encaixa?" required error={!!errors.religion}>
+            <Sel field="religion" opts={[
+              ["Cristianismo","Cristianismo"],
+              ["Budismo","Budismo"],
+              ["Hinduísmo","Hinduísmo"],
+              ["Judaísmo","Judaísmo"],
+              ["Sikhismo","Sikhismo"],
+              ["Islamismo","Islamismo"],
+              ["Não sigo nenhuma religião","Não sigo nenhuma religião"],
+              ["Outro","Outro"],
+              ["Prefiro não informar","Prefiro não informar"],
+            ]} />
           </Field>
 
           <Field id="field-education" label="Nível de escolaridade" required error={!!errors.education}>
