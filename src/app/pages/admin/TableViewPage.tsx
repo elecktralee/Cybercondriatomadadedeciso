@@ -53,6 +53,7 @@ const CONFIGS: Record<Dataset, {
       { key: "participant_id", label: "ID", render: (v) => <span className="font-mono text-xs">{String(v).slice(0, 8)}…</span> },
       { key: "created_at", label: "Data", render: (v) => v ? new Date(v).toLocaleString("pt-BR") : "—" },
       { key: "age", label: "Idade" },
+      { key: "out_of_target_range", label: "Fora da faixa-alvo (16-25)", render: (v) => v ? "Sim" : "Não" },
       { key: "gender", label: "Gênero" },
       { key: "education", label: "Escolaridade" },
       { key: "occupation", label: "Ocupação" },
