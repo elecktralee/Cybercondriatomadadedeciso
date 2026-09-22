@@ -92,7 +92,7 @@ export default function TALEPage() {
             </p>
             <ul className="space-y-2.5">
               {[
-                "Responder a perguntas sobre você, como idade, gênero, escolaridade, renda da família, estado onde mora (se quiser) e alguns cuidados com a saúde, como se você usa remédio todo dia, se tem alguma doença de longa duração ou se já teve diagnóstico de ansiedade. Não pedimos seu nome.",
+                "Responder a perguntas sobre você, como idade, gênero, cor ou raça, se você segue alguma religião, escolaridade, renda da família, estado onde mora (se quiser) e alguns cuidados com a saúde, como se você usa remédio todo dia, se tem alguma doença de longa duração ou se já teve diagnóstico de ansiedade. Não pedimos seu nome.",
                 "Responder a questionários sobre ansiedade, sobre como você busca informações de saúde na internet e sobre o quanto você confia em si mesmo para resolver problemas.",
                 "Participar de um jogo de tomada de decisão. Você vai escolher entre quatro baralhos virtuais, com dinheiro de mentira, tentando ganhar o maior saldo possível. Não tem resposta certa, é apenas para entender como cada pessoa decide.",
               ].map((t, i) => (
@@ -139,6 +139,11 @@ export default function TALEPage() {
               e-mail nem seu endereço, e não registramos o endereço IP do seu aparelho. Os resultados serão
               publicados de forma conjunta, sem identificar nenhum participante.
             </p>
+            <p>
+              As perguntas sobre cor ou raça e sobre religião existem só para saber quem, de modo geral,
+              participou da pesquisa, e não para comparar essas respostas com as outras perguntas do estudo. Em
+              qualquer uma das duas, você pode escolher "Prefiro não informar".
+            </p>
           </Secao>
 
           <Secao titulo="Você não é obrigado a participar">
@@ -153,10 +158,9 @@ export default function TALEPage() {
 
           <Secao titulo="E se eu gastar alguma coisa?">
             <p>
-              Participar não custa nada e não há pagamento. Se você tiver algum gasto por causa da pesquisa, como
-              o uso de dados de internet, a pesquisadora devolve o valor, mediante comprovação, como determina a
-              Resolução CNS n.º 466/2012. Se acontecer algum dano por causa da pesquisa, você tem direito a
-              indenização.
+              Participar não custa nada e não há pagamento. Se você tiver algum gasto por causa da pesquisa, a
+              pesquisadora devolve o valor, mediante comprovação, como determina a Resolução CNS n.º 466/2012.
+              Se acontecer algum dano por causa da pesquisa, você tem direito a indenização.
             </p>
           </Secao>
 

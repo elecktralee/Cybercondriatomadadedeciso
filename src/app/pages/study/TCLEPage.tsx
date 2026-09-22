@@ -158,7 +158,7 @@ export default function TCLEPage() {
             </p>
             <p>Caso concorde em participar, você realizará as etapas abaixo em uma única sessão online.</p>
             <Lista itens={[
-              "Questionário sociodemográfico, com informações como idade, gênero, escolaridade, ocupação, estado civil, renda familiar aproximada, estado onde mora (opcional), horas de uso da internet, frequência de busca de informações de saúde e tipo de acesso a serviços de saúde. Inclui também perguntas sobre saúde, como se você tem alguma condição crônica diagnosticada, se já recebeu diagnóstico de transtorno de ansiedade e se faz uso regular de medicamentos.",
+              "Questionário sociodemográfico, com informações como idade, gênero, cor ou raça, religião, escolaridade, ocupação, estado civil, renda familiar aproximada, estado onde mora (opcional), horas de uso da internet, frequência de busca de informações de saúde e tipo de acesso a serviços de saúde. Inclui também perguntas sobre saúde, como se você tem alguma condição crônica diagnosticada, se já recebeu diagnóstico de transtorno de ansiedade e se faz uso regular de medicamentos.",
               "Beck Anxiety Inventory (BAI), inventário de 21 itens sobre sintomas de ansiedade sentidos recentemente.",
               "Cyberchondria Severity Scale (CSS-33), escala de 33 itens sobre a busca de informações de saúde na internet e as reações a essa busca.",
               "General Self-Efficacy Scale (GSE), escala de 10 itens sobre a confiança na própria capacidade de lidar com desafios.",
@@ -232,19 +232,22 @@ export default function TCLEPage() {
               funcionamento do sistema. Se quiser saber os resultados da pesquisa quando forem publicados, basta
               pedir pelo e-mail {PESQUISADORA.email}.
             </p>
+            <p>
+              As perguntas sobre cor ou raça e sobre religião são consideradas dados sensíveis pela Lei Geral de
+              Proteção de Dados (Lei n.º 13.709/2018). Elas são usadas apenas para descrever o perfil da amostra
+              participante, e não fazem parte das hipóteses desta pesquisa sobre cybercondria, ansiedade,
+              autoeficácia ou tomada de decisão. Você pode escolher a opção "Prefiro não informar" em qualquer
+              uma delas, sem qualquer prejuízo à sua participação.
+            </p>
           </Secao>
 
           <Secao titulo="8. Ressarcimento e indenização">
             <p>
               A participação nesta pesquisa não acarretará custos, nem haverá qualquer gratificação financeira.
-              Em caso de despesas necessárias decorrentes da pesquisa, como o consumo de dados de internet, você
-              será devidamente ressarcido pela pesquisadora responsável, mediante comprovação, como determina a
-              Resolução CNS n.º 466/2012. Para solicitar o ressarcimento, basta entrar em contato pelo e-mail{" "}
-              {PESQUISADORA.email}.
-            </p>
-            <p>
-              Você também terá direito à indenização, caso sofra eventuais danos decorrentes da sua participação
-              na pesquisa.
+              Em caso de despesas necessárias decorrentes da pesquisa, você será devidamente ressarcido pela
+              pesquisadora responsável, mediante comprovação, como determina a Resolução CNS n.º 466/2012. Você
+              também terá direito à indenização, caso sofra eventuais danos decorrentes da sua participação na
+              pesquisa.
             </p>
           </Secao>
 

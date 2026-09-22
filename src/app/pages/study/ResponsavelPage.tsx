@@ -70,7 +70,7 @@ export default function ResponsavelPage() {
           <Secao titulo="3. Procedimentos">
             <p>O(A) adolescente realizará as etapas abaixo em uma única sessão online, e você pode acompanhar se desejar.</p>
             <Lista cor="amber" itens={[
-              "Questionário sociodemográfico, com informações como idade, gênero, escolaridade, ocupação, estado civil, renda familiar aproximada, estado onde mora (opcional), horas de uso da internet, frequência de busca de informações de saúde e tipo de acesso a serviços de saúde. Inclui também perguntas sobre saúde, como se há alguma condição crônica diagnosticada, se já recebeu diagnóstico de transtorno de ansiedade e se faz uso regular de medicamentos.",
+              "Questionário sociodemográfico, com informações como idade, gênero, cor ou raça, religião, escolaridade, ocupação, estado civil, renda familiar aproximada, estado onde mora (opcional), horas de uso da internet, frequência de busca de informações de saúde e tipo de acesso a serviços de saúde. Inclui também perguntas sobre saúde, como se há alguma condição crônica diagnosticada, se já recebeu diagnóstico de transtorno de ansiedade e se faz uso regular de medicamentos.",
               "Beck Anxiety Inventory (BAI), inventário de 21 itens sobre sintomas de ansiedade sentidos recentemente.",
               "Cyberchondria Severity Scale (CSS-33), escala de 33 itens sobre a busca de informações de saúde na internet e as reações a essa busca.",
               "General Self-Efficacy Scale (GSE), escala de 10 itens sobre a confiança na própria capacidade de lidar com desafios.",
@@ -138,19 +138,22 @@ export default function ResponsavelPage() {
               dispositivo, o navegador e o sistema operacional utilizados, que servem apenas para verificar o
               funcionamento do sistema.
             </p>
+            <p>
+              As perguntas sobre cor ou raça e sobre religião são consideradas dados sensíveis pela Lei Geral de
+              Proteção de Dados (Lei n.º 13.709/2018). Elas são usadas apenas para descrever o perfil da amostra
+              participante, e não fazem parte das hipóteses desta pesquisa sobre cybercondria, ansiedade,
+              autoeficácia ou tomada de decisão. Você ou o(a) adolescente podem escolher a opção "Prefiro não
+              informar" em qualquer uma delas, sem qualquer prejuízo à participação.
+            </p>
           </Secao>
 
           <Secao titulo="8. Ressarcimento e indenização">
             <p>
               A participação não acarretará custos, nem haverá qualquer gratificação financeira. Em caso de
-              despesas necessárias decorrentes da participação, como o consumo de dados de internet, você ou
-              o(a) adolescente serão devidamente ressarcidos pela pesquisadora responsável, mediante
-              comprovação, como determina a Resolução CNS n.º 466/2012. Para solicitar o ressarcimento, basta
-              entrar em contato pelo e-mail {PESQUISADORA.email}.
-            </p>
-            <p>
-              O(A) participante também terá direito à indenização, caso sofra eventuais danos decorrentes da
-              participação na pesquisa.
+              despesas necessárias decorrentes da participação, você ou o(a) adolescente serão devidamente
+              ressarcidos pela pesquisadora responsável, mediante comprovação, como determina a Resolução CNS
+              n.º 466/2012. O(A) participante também terá direito à indenização, caso sofra eventuais danos
+              decorrentes da participação na pesquisa.
             </p>
           </Secao>
 
