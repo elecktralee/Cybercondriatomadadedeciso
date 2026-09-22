@@ -55,6 +55,8 @@ const CONFIGS: Record<Dataset, {
       { key: "age", label: "Idade" },
       { key: "out_of_target_range", label: "Fora da faixa-alvo (16-25)", render: (v) => v ? "Sim" : "Não" },
       { key: "gender", label: "Gênero" },
+      { key: "race_color", label: "Cor/Raça" },
+      { key: "religion", label: "Religião" },
       { key: "education", label: "Escolaridade" },
       { key: "occupation", label: "Ocupação" },
       { key: "marital_status", label: "Estado Civil" },
