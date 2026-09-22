@@ -84,6 +84,8 @@ app.post("/make-server-ba772e44/study/sociodemographic/:id", async (c) => {
       participant_id: id,
       age: data.age,
       gender: data.gender,
+      race_color: data.raceColor,
+      religion: data.religion,
       education: data.education,
       occupation: data.occupation,
       marital_status: data.maritalStatus,
@@ -220,6 +222,8 @@ app.post("/make-server-ba772e44/study/igt/:id", async (c) => {
         net_gain: trial.net_gain,
         running_total: trial.running_total,
         response_time_ms: trial.response_time_ms || 0,
+        hover_switches: trial.hover_switches || 0,
+        mouse_hovers: trial.mouse_hovers || [],
         created_at: new Date().toISOString(),
       });
     }
