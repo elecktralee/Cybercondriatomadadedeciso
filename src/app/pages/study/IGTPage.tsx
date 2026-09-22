@@ -55,6 +55,12 @@ const DECK_STYLE: Record<
   },
 };
 
+interface HoverEvent {
+  deck: DeckId;
+  enter_ms: number;
+  exit_ms: number;
+}
+
 interface Trial {
   trial_number: number;
   deck_chosen: DeckId;
@@ -63,6 +69,8 @@ interface Trial {
   net_gain: number;
   running_total: number;
   response_time_ms: number;
+  mouse_hovers: HoverEvent[];
+  hover_switches: number;
   advantageous: boolean;
 }
 
@@ -75,6 +83,8 @@ const fmt = (v: number) =>
 function DeckCard({
   deck,
   onClick,
+  onMouseEnter,
+  onMouseLeave,
   disabled = false,
   isChosen = false,
   isOther = false,
@@ -82,6 +92,8 @@ function DeckCard({
 }: {
   deck: DeckId;
   onClick?: () => void;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
   disabled?: boolean;
   isChosen?: boolean;
   isOther?: boolean;
@@ -112,6 +124,8 @@ function DeckCard({
     >
       <motion.button
         onClick={onClick}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
         disabled={disabled}
         whileHover={interactive ? { y: -10, scale: 1.04, rotateY: 4 } : {}}
         whileTap={interactive ? { scale: 0.95, rotateY: -2 } : {}}
@@ -379,6 +393,21 @@ export default function IGTPage() {
   const [chosenDeck, setChosenDeck] = useState<DeckId | null>(null);
   const [apiError, setApiError] = useState("");
   const trialStartTime = useRef<number>(Date.now());
+  const hoverEventsRef = useRef<HoverEvent[]>([]);
+
+  // Registra quando o cursor entra e sai de cada baralho, durante a escolha
+  const handleHoverEnter = (deckId: DeckId) => {
+    hoverEventsRef.current.push({ deck: deckId, enter_ms: Date.now() - trialStartTime.current, exit_ms: -1 });
+  };
+  const handleHoverExit = (deckId: DeckId) => {
+    for (let i = hoverEventsRef.current.length - 1; i >= 0; i--) {
+      const ev = hoverEventsRef.current[i];
+      if (ev.deck === deckId && ev.exit_ms === -1) {
+        ev.exit_ms = Date.now() - trialStartTime.current;
+        break;
+      }
+    }
+  };
 
   // ── Restore from localStorage ─────────────────────────────────────────────
   useEffect(() => {
@@ -418,6 +447,11 @@ export default function IGTPage() {
   const handleChooseDeck = (deckId: DeckId) => {
     if (phase !== "choosing" || trials.length >= 100) return;
     const responseTime = Date.now() - trialStartTime.current;
+    // Fecha qualquer hover que ainda estava aberto no momento do clique
+    hoverEventsRef.current.forEach(ev => { if (ev.exit_ms === -1) ev.exit_ms = responseTime; });
+    const hovers = hoverEventsRef.current;
+    const hoverSwitches = hovers.filter(ev => ev.deck !== deckId).length;
+    hoverEventsRef.current = [];
     const trialNum = trials.length + 1;
     const { loss, newPools } = drawLoss(deckId, pools);
     const gain = IGT_DECKS[deckId].gain;
@@ -431,6 +465,8 @@ export default function IGTPage() {
       net_gain: netGain,
       running_total: newBalance,
       response_time_ms: responseTime,
+      mouse_hovers: hovers,
+      hover_switches: hoverSwitches,
       advantageous: isAdvantageous(deckId),
     };
     const newTrials = [...trials, trial];
@@ -474,6 +510,7 @@ export default function IGTPage() {
     setPhase("choosing");
     setChosenDeck(null);
     trialStartTime.current = Date.now();
+    hoverEventsRef.current = [];
   };
 
   const trialNumber = trials.length;
@@ -612,6 +649,8 @@ export default function IGTPage() {
                 key={deckId}
                 deck={deckId}
                 onClick={phase === "choosing" ? () => handleChooseDeck(deckId) : undefined}
+                onMouseEnter={phase === "choosing" ? () => handleHoverEnter(deckId) : undefined}
+                onMouseLeave={phase === "choosing" ? () => handleHoverExit(deckId) : undefined}
                 disabled={phase !== "choosing"}
                 isChosen={phase === "feedback" && deckId === chosenDeck}
                 isOther={phase === "feedback" && deckId !== chosenDeck}
