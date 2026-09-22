@@ -180,6 +180,7 @@ const CONFIGS: Record<Dataset, {
       { key: "net_gain", label: "Líquido", render: (v) => <span className={Number(v) >= 0 ? "text-green-600 font-medium" : "text-red-500 font-medium"}>{Number(v) >= 0 ? "+" : ""}R${v}</span> },
       { key: "running_total", label: "Saldo", render: (v) => <span className={Number(v) >= 2000 ? "text-green-600" : "text-red-500"}>R${v}</span> },
       { key: "response_time_ms", label: "TR (ms)" },
+      { key: "hover_switches", label: "Trocas antes de decidir" },
       { key: "advantageous", label: "Categoria", render: (v) => v ? <span className="text-emerald-600 text-xs font-medium">Vantajoso</span> : <span className="text-red-500 text-xs font-medium">Desvantajoso</span> },
     ],
   },
